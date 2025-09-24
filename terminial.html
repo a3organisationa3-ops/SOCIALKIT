@@ -3,148 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UNIVERSAL HACKER'S RAT</title>
+  <title>Hackers Terminal</title>
   <style>
     body {
-      background-color: #000;
+      background: black;
       color: #00ff00;
-      font-family: "Courier New", Courier, monospace;
-      padding: 15px;
+      font-family: monospace;
+      padding: 20px;
+      margin: 0;
       overflow: hidden;
     }
-
     #terminal {
-      width: 100%;
-      height: 90vh;
-      background: #000;
+      background: #111;
       border: 2px solid #00ff00;
+      border-radius: 8px;
       padding: 15px;
+      height: 70vh;
       overflow-y: auto;
       white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 14px;
+      box-shadow: 0 0 15px #00ff00;
     }
-
-    input {
-      width: 100%;
+    #inputArea {
+      display: flex;
+      margin-top: 15px;
+    }
+    #inputBox {
+      flex: 1;
+      padding: 8px;
       background: #000;
+      border: 1px solid #00ff00;
       color: #00ff00;
-      border: none;
+      font-size: 16px;
       outline: none;
-      font-family: inherit;
-      font-size: 14px;
     }
-
-    .hidden {
-      display: none;
-    }
-
-    .flash {
-      color: #ff0000;
-      text-shadow: 0 0 5px #ff0000;
-      animation: flash 1s infinite;
-    }
-
-    @keyframes flash {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    .btn {
+      padding: 8px 20px;
+      margin-left: 10px;
+      background: #00ff00;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <div id="terminal"></div>
-  <input id="userInput" type="text" placeholder="Type command here..." onkeydown="processCommand(event)" autofocus>
+
+  <h2 style="color:#00ff00;">Hackers Terminal</h2>
+  <div id="terminal">Initializing hack sequence...\n</div>
+
+  <div id="inputArea">
+    <input type="text" id="inputBox" placeholder="Enter target info here..." />
+    <button class="btn" onclick="startHack()">Start</button>
+  </div>
 
   <script>
-    const terminal = document.getElementById("terminal");
-    const input = document.getElementById("userInput");
+    const terminal = document.getElementById('terminal');
 
-    let target = "unknown";
-
-    // Get target from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('target')) {
-      target = urlParams.get('target');
-    }
-
-    // Terminal startup animation
-    const bootText = [
-      "Initializing UNIVERSAL HACKER'S RAT v2.5...",
-      "Loading modules...",
-      "Bypassing security layers...",
-      "Target identified: " + target,
-      "Connection established successfully.",
-      "",
-      "Type 'help' to view available commands.",
-      ""
-    ];
-
-    let bootIndex = 0;
-    function bootTerminal() {
-      if (bootIndex < bootText.length) {
-        terminal.innerHTML += bootText[bootIndex] + "\n";
+    function logToTerminal(text, delay) {
+      setTimeout(() => {
+        terminal.innerHTML += text + "\n";
         terminal.scrollTop = terminal.scrollHeight;
-        bootIndex++;
-        setTimeout(bootTerminal, 800);
+      }, delay);
+    }
+
+    function startHack() {
+      const input = document.getElementById('inputBox').value.trim();
+      if (!input) {
+        logToTerminal("Error: No input detected.", 0);
+        return;
       }
-    }
-    bootTerminal();
 
-    // Commands
-    function processCommand(e) {
-      if (e.key === "Enter") {
-        const command = input.value.trim().toLowerCase();
-        input.value = "";
+      terminal.innerHTML = ""; // clear previous logs
 
-        if (command === "help") {
-          printOutput("Available commands:\n- vv : Show device version\n- info : Show target information\n- log : Control device\n- clear : Clear terminal\n- exit : Disconnect");
-        } else if (command === "vv") {
-          const randomModel = ["Samsung Galaxy S22", "Redmi Note 13", "OnePlus 11", "Pixel 7", "Vivo V29"];
-          const randomVersion = ["Android 11", "Android 12", "Android 13", "Android 14"];
-          printOutput("Device Model: " + randomModel[Math.floor(Math.random() * randomModel.length)] +
-            "\nAndroid Version: " + randomVersion[Math.floor(Math.random() * randomVersion.length)]);
-        } else if (command === "info") {
-          printOutput(
-            "Fetching target info...\n" +
-            "IP Address: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) +
-            "\nMAC Address: 02:1A:C3:" + Math.floor(Math.random() * 99) + ":4F:" + Math.floor(Math.random() * 99) +
-            "\nLocation: " + randomLocation()
-          );
-        } else if (command === "log") {
-          printOutput("Attempting to gain full control...");
-          setTimeout(() => {
-            printOutput("SYSTEM FAILURE DETECTED!", "flash");
-            setTimeout(() => {
-              terminal.innerHTML = "<div class='flash'>Thanks for scam 🤡</div>";
-            }, 2000);
-          }, 3000);
-        } else if (command === "clear") {
-          terminal.innerHTML = "";
-        } else if (command === "exit") {
-          printOutput("Disconnecting from target...");
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 1500);
-        } else {
-          printOutput("Unknown command: " + command + "\nType 'help' for list of commands.");
-        }
-      }
-    }
+      logToTerminal("[+] Connecting to secure server...", 500);
+      logToTerminal("[+] Bypassing firewall protection...", 1500);
+      logToTerminal(`[+] Target found: ${input}`, 2500);
+      logToTerminal("[+] Deploying advanced exploits...", 3500);
+      logToTerminal("[+] Extracting encrypted data...", 5000);
+      logToTerminal("[✔] Hack successful! Data retrieved.", 7000);
 
-    // Print output to terminal
-    function printOutput(text, extraClass = "") {
-      terminal.innerHTML += `<div class='${extraClass}'>${text}</div>\n`;
-      terminal.scrollTop = terminal.scrollHeight;
-    }
-
-    // Random location generator
-    function randomLocation() {
-      const cities = [
-        "New York, USA", "London, UK", "Berlin, Germany",
-        "Delhi, India", "Tokyo, Japan", "Paris, France",
-        "Toronto, Canada", "Sydney, Australia"
-      ];
-      return cities[Math.floor(Math.random() * cities.length)];
+      // Final funny message
+      logToTerminal("Thanks for scam 🤡.....", 9000);
     }
   </script>
 </body>
