@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNIVERSAL HACKER'S RAT</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: "Courier New", Courier, monospace;
+      padding: 15px;
+      overflow: hidden;
+    }
+
+    #terminal {
+      width: 100%;
+      height: 90vh;
+      background: #000;
+      border: 2px solid #00ff00;
+      padding: 15px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      background: #000;
+      color: #00ff00;
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .flash {
+      color: #ff0000;
+      text-shadow: 0 0 5px #ff0000;
+      animation: flash 1s infinite;
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <input id="userInput" type="text" placeholder="Type command here..." onkeydown="processCommand(event)" autofocus>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const input = document.getElementById("userInput");
+
+    let target = "unknown";
+
+    // Get target from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('target')) {
+      target = urlParams.get('target');
+    }
+
+    // Terminal startup animation
+    const bootText = [
+      "Initializing UNIVERSAL HACKER'S RAT v2.5...",
+      "Loading modules...",
+      "Bypassing security layers...",
+      "Target identified: " + target,
+      "Connection established successfully.",
+      "",
+      "Type 'help' to view available commands.",
+      ""
+    ];
+
+    let bootIndex = 0;
+    function bootTerminal() {
+      if (bootIndex < bootText.length) {
+        terminal.innerHTML += bootText[bootIndex] + "\n";
+        terminal.scrollTop = terminal.scrollHeight;
+        bootIndex++;
+        setTimeout(bootTerminal, 800);
+      }
+    }
+    bootTerminal();
+
+    // Commands
+    function processCommand(e) {
+      if (e.key === "Enter") {
+        const command = input.value.trim().toLowerCase();
+        input.value = "";
+
+        if (command === "help") {
+          printOutput("Available commands:\n- vv : Show device version\n- info : Show target information\n- log : Control device\n- clear : Clear terminal\n- exit : Disconnect");
+        } else if (command === "vv") {
+          const randomModel = ["Samsung Galaxy S22", "Redmi Note 13", "OnePlus 11", "Pixel 7", "Vivo V29"];
+          const randomVersion = ["Android 11", "Android 12", "Android 13", "Android 14"];
+          printOutput("Device Model: " + randomModel[Math.floor(Math.random() * randomModel.length)] +
+            "\nAndroid Version: " + randomVersion[Math.floor(Math.random() * randomVersion.length)]);
+        } else if (command === "info") {
+          printOutput(
+            "Fetching target info...\n" +
+            "IP Address: 192.168." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) +
+            "\nMAC Address: 02:1A:C3:" + Math.floor(Math.random() * 99) + ":4F:" + Math.floor(Math.random() * 99) +
+            "\nLocation: " + randomLocation()
+          );
+        } else if (command === "log") {
+          printOutput("Attempting to gain full control...");
+          setTimeout(() => {
+            printOutput("SYSTEM FAILURE DETECTED!", "flash");
+            setTimeout(() => {
+              terminal.innerHTML = "<div class='flash'>Thanks for scam 🤡</div>";
+            }, 2000);
+          }, 3000);
+        } else if (command === "clear") {
+          terminal.innerHTML = "";
+        } else if (command === "exit") {
+          printOutput("Disconnecting from target...");
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        } else {
+          printOutput("Unknown command: " + command + "\nType 'help' for list of commands.");
+        }
+      }
+    }
+
+    // Print output to terminal
+    function printOutput(text, extraClass = "") {
+      terminal.innerHTML += `<div class='${extraClass}'>${text}</div>\n`;
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    // Random location generator
+    function randomLocation() {
+      const cities = [
+        "New York, USA", "London, UK", "Berlin, Germany",
+        "Delhi, India", "Tokyo, Japan", "Paris, France",
+        "Toronto, Canada", "Sydney, Australia"
+      ];
+      return cities[Math.floor(Math.random() * cities.length)];
+    }
+  </script>
+</body>
+</html>
