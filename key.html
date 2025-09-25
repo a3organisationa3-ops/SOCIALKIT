@@ -6,102 +6,68 @@
   <title>Enter Access Key</title>
   <style>
     body {
-      background-color: #000;
+      background: black;
       color: #00ff00;
-      font-family: Arial, sans-serif;
+      font-family: monospace;
       text-align: center;
-      padding: 20px;
+      padding-top: 100px;
     }
-
-    h1 {
-      margin-top: 30px;
-      text-shadow: 0 0 10px #00ff00;
-    }
-
-    .box {
-      background: #111;
-      padding: 20px;
-      border: 1px solid #00ff00;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 350px;
-      margin: 30px auto;
-    }
-
-    input[type="text"] {
-      width: 90%;
-      padding: 12px;
-      margin-top: 15px;
-      border: 1px solid #00ff00;
-      border-radius: 5px;
+    input {
+      padding: 10px;
+      border: 2px solid #00ff00;
       background: #000;
       color: #00ff00;
+      font-size: 18px;
+      border-radius: 5px;
+      width: 250px;
       text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background: #00ff00;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+      margin-top: 15px;
       font-size: 16px;
     }
-
-    .btn {
-      display: block;
-      width: 90%;
-      margin: 15px auto;
-      padding: 12px;
-      background-color: #111;
-      border: 1px solid #00ff00;
-      color: #00ff00;
-      font-size: 18px;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #00ff00;
-      color: #000;
-      cursor: pointer;
-    }
-
-    #error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-      display: none;
-    }
-
-    .buy-text {
+    .whatsapp-btn {
+      display: inline-block;
       margin-top: 20px;
-      font-size: 14px;
-      color: #ccc;
+      padding: 10px 25px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Access Key Required</h1>
-  <div class="box">
-    <p>Enter your access key to continue</p>
-    <input type="text" id="accessKey" placeholder="Enter Key Here">
-    <button class="btn" onclick="verifyKey()">Verify Key</button>
-    <p id="error">Invalid Key! Please try again.</p>
-
-    <div class="buy-text">
-      <p>Don't have a key?</p>
-      <a class="btn" href="https://wa.me/919836942455?text=I%20want%20key" target="_blank">Buy Key on WhatsApp</a>
-    </div>
-  </div>
+  <h2>Enter Your Access Key</h2>
+  <input type="text" id="keyInput" placeholder="Enter Key Here">
+  <button onclick="verifyKey()">Submit</button>
+  <div class="error" id="errorMsg"></div>
+  <a id="whatsappBtn" class="whatsapp-btn" href="#" style="display:none;">Contact on WhatsApp</a>
 
   <script>
     function verifyKey() {
-      const correctKey = "HACKERS12232";
-      const userKey = document.getElementById("accessKey").value.trim();
-      const errorMsg = document.getElementById("error");
+      const key = document.getElementById('keyInput').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      const whatsappBtn = document.getElementById('whatsappBtn');
 
-      if (userKey === correctKey) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const target = urlParams.get('target') || 'unknown';
-
-        // Redirect to share page with target info
-        window.location.href = "share.html?target=" + target;
+      if (key === "HACKERS12232") {
+        window.location.href = "terminal.html"; // redirect to hack page
       } else {
-        errorMsg.style.display = "block";
+        errorMsg.innerText = "❌ Invalid Key! Please buy the correct key to proceed.";
+        whatsappBtn.style.display = "inline-block";
+        whatsappBtn.href = "https://wa.me/919836942455?text=I%20want%20key";
       }
     }
   </script>
